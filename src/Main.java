@@ -34,6 +34,7 @@ public class Main {
         A s = new A(n);
         System.out.println(s.sm(m));
         System.out.println(s.getX());
+        // OK
 
     }
 
