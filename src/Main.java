@@ -136,7 +136,7 @@ public class Main {
         }
         System.out.println(wall);
 
-        System.out.println("Количество жизней:\t" + live + "\n"); // OK
+        System.out.println("Количество жизней:\t" + live + "\n"); //OK
     }
 }
 
