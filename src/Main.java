@@ -124,14 +124,14 @@ public class Main {
                                 + "\nКоординаты персонажа — (x: " + person.getX()
                                 + ", y: " + person.getY() + ")");
 
-                        String stepWASD = (scanner.nextLine()).toUpperCase();
+                        String stepWASD = scanner.nextLine();
                         while (!isValidMoveWASD(stepWASD)) {
                             System.out.println("Неверный ввод (Введи W/A/S/D)");
-                            stepWASD = scanner.nextLine();
+                            stepWASD = scanner.nextLine().toUpperCase();
                         }
                         int x = person.getX();
                         int y = person.getY();
-                        switch (stepWASD) {
+                        /*switch (stepWASD) {
                             case "W":
                                 x = person.getX();
                                 y = person.getY() - 1;
@@ -148,7 +148,7 @@ public class Main {
                                 x = person.getX() - 1;
                                 y = person.getY();
                                 break;
-                        }
+                        }*/
                         System.out.println(x + ", " + y);
 
                         if (person.isMoveCorrect(x, y)) {
