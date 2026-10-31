@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.Random;
@@ -62,118 +64,129 @@ public class Main {
                 System.out.println("Выбери сложность игры (от 1 до 5):");
                 int difficultGame = scanner.nextInt();
                 System.out.println("Выбранная сложность:\t" + difficultGame);
+                System.out.println("Выбери режим управления (Координаты - 1/WASD - 2)");
+                int controlMode = scanner.nextInt();
+                if (controlMode == 1) {
+                    while (true) {
+                        board[person.getY() - 1][person.getX() - 1] = person.getImage();
+                        outputBoard(board, person.getLive());
 
-                while (true) {
-                    board[person.getY() - 1][person.getX() - 1] = person.getImage();
-                    outputBoard(board, person.getLive());
+                        System.out.println("Введите, куда будет ходить персонаж "
+                                + "(ход возможен только по вертикали или горизонтали на одну клетку)"
+                                + "\nКоординаты персонажа — (x: " + person.getX()
+                                + ", y: " + person.getY() + ")");
 
-                    System.out.println("Введите, куда будет ходить персонаж "
-                            + "(ход возможен только по вертикали или горизонтали на одну клетку)"
-                            + "\nКоординаты персонажа — (x: " + person.getX()
-                            + ", y: " + person.getY() + ")");
+                        int x = scanner.nextInt();
+                        int y = scanner.nextInt();
+                        System.out.println(x + ", " + y);
 
-                    int x = scanner.nextInt();
-                    int y = scanner.nextInt();
-                    System.out.println(x + ", " + y);
+                        if (person.isMoveCorrect(x, y)) {
+                            if (board[y - 1][x - 1].equals("  ")) {
+                                board[person.getY() - 1][person.getX() - 1] = "  ";
+                                person.move(x, y);
+                                step++;
 
-                    if (person.isMoveCorrect(x, y)) {
-                        if (board[y - 1][x - 1].equals("  ")) {
-                            board[person.getY() - 1][person.getX() - 1] = "  ";
-                            person.move(x, y);
-                            step++;
-
-                            System.out.println("Ход корректный; новые координаты: "
-                                    + person.getX() + ", " + person.getY()
-                                    + "\nХод номер: " + step);
-                        } else if (board[y - 1][x - 1].equals(castle)) {
-                            System.out.println("Вы прошли игру!");
-                            break;
-                        } else {
-                            for (Monster monster : monsters) {
-                                if (monster.conflictPerson(x, y)) {
-                                    if (monster.taskMonster(difficultGame)) {
-                                        board[person.getY() - 1][person.getX() - 1] = "  ";
-                                        person.move(x, y);
-                                        step++;
-                                    } else {
-                                        person.downLive();
+                                System.out.println("Ход корректный; новые координаты: "
+                                        + person.getX() + ", " + person.getY()
+                                        + "\nХод номер: " + step);
+                            } else if (board[y - 1][x - 1].equals(castle)) {
+                                System.out.println("Вы прошли игру!");
+                                break;
+                            } else {
+                                for (Monster monster : monsters) {
+                                    if (monster.conflictPerson(x, y)) {
+                                        if (monster.taskMonster(difficultGame)) {
+                                            board[person.getY() - 1][person.getX() - 1] = "  ";
+                                            person.move(x, y);
+                                            step++;
+                                        } else {
+                                            person.downLive();
+                                        }
+                                        break;
                                     }
-                                    break;
                                 }
                             }
-                        }
-                    } else {
-                        System.out.println("Некорректный ход");
-                    }
-
-                    if (person.getLive() <= 0) {
-                        break;
-                    }
-                }
-//WASD
-                while (true) {
-                    board[person.getY() - 1][person.getX() - 1] = person.getImage();
-                    outputBoard(board, person.getLive());
-
-                    System.out.println("Введите, куда будет ходить персонаж "
-                            + "(ход возможен только по вертикали или горизонтали на одну клетку)"
-                            + "\nКоординаты персонажа — (x: " + person.getX()
-                            + ", y: " + person.getY() + ")");
-
-                    String stepWASD = scanner.nextLine();
-                    while (!isValidMoveWASD(stepWASD)) {
-                        stepWASD = scanner.nextLine()
-                    }
-                    switch (stepWASD) {
-                        case "W":
-                            int x = person.getX() + 1;
-                            int y = person.getY();
-                        case "W":
-                            int x = person.getX() + 1;
-                            int y = person.getY();
-                        case "W":
-                            int x = person.getX() + 1;
-                            int y = person.getY();
-                        case "W":
-                            int x = person.getX() + 1;
-                            int y = person.getY();
-                    }
-                    System.out.println(x + ", " + y);
-
-                    if (person.isMoveCorrect(x, y)) {
-                        if (board[y - 1][x - 1].equals("  ")) {
-                            board[person.getY() - 1][person.getX() - 1] = "  ";
-                            person.move(x, y);
-                            step++;
-
-                            System.out.println("Ход корректный; новые координаты: "
-                                    + person.getX() + ", " + person.getY()
-                                    + "\nХод номер: " + step);
-                        } else if (board[y - 1][x - 1].equals(castle)) {
-                            System.out.println("Вы прошли игру!");
-                            break;
                         } else {
-                            for (Monster monster : monsters) {
-                                if (monster.conflictPerson(x, y)) {
-                                    if (monster.taskMonster(difficultGame)) {
-                                        board[person.getY() - 1][person.getX() - 1] = "  ";
-                                        person.move(x, y);
-                                        step++;
-                                    } else {
-                                        person.downLive();
+                            System.out.println("Некорректный ход");
+                        }
+
+                        if (person.getLive() <= 0) {
+                            break;
+                        }
+                    }
+                } else if (controlMode == 2) {
+                    while (true) {
+                        board[person.getY() - 1][person.getX() - 1] = person.getImage();
+                        outputBoard(board, person.getLive());
+
+                        System.out.println("Введите, куда будет ходить персонаж "
+                                + "(ход возможен только по вертикали или горизонтали на одну клетку)"
+                                + "\nКоординаты персонажа — (x: " + person.getX()
+                                + ", y: " + person.getY() + ")");
+
+                        String stepWASD = (scanner.nextLine()).toUpperCase();
+                        while (!isValidMoveWASD(stepWASD)) {
+                            System.out.println("Неверный ввод (Введи W/A/S/D)");
+                            stepWASD = scanner.nextLine();
+                        }
+                        int x = person.getX();
+                        int y = person.getY();
+                        switch (stepWASD) {
+                            case "W":
+                                x = person.getX();
+                                y = person.getY() - 1;
+                                break;
+                            case "A":
+                                x = person.getX() + 1;
+                                y = person.getY();
+                                break;
+                            case "S":
+                                x = person.getX();
+                                y = person.getY() + 1;
+                                break;
+                            case "D":
+                                x = person.getX() - 1;
+                                y = person.getY();
+                                break;
+                        }
+                        System.out.println(x + ", " + y);
+
+                        if (person.isMoveCorrect(x, y)) {
+                            if (board[y - 1][x - 1].equals("  ")) {
+                                board[person.getY() - 1][person.getX() - 1] = "  ";
+                                person.move(x, y);
+                                step++;
+
+                                System.out.println("Ход корректный; новые координаты: "
+                                        + person.getX() + ", " + person.getY()
+                                        + "\nХод номер: " + step);
+                            } else if (board[y - 1][x - 1].equals(castle)) {
+                                System.out.println("Вы прошли игру!");
+                                break;
+                            } else {
+                                for (Monster monster : monsters) {
+                                    if (monster.conflictPerson(x, y)) {
+                                        if (monster.taskMonster(difficultGame)) {
+                                            board[person.getY() - 1][person.getX() - 1] = "  ";
+                                            person.move(x, y);
+                                            step++;
+                                        } else {
+                                            person.downLive();
+                                        }
+                                        break;
                                     }
-                                    break;
                                 }
                             }
+                        } else {
+                            System.out.println("Некорректный ход");
                         }
-                    } else {
-                        System.out.println("Некорректный ход");
-                    }
 
-                    if (person.getLive() <= 0) {
-                        break;
+                        if (person.getLive() <= 0) {
+                            break;
+                        }
                     }
                 }
+
                 if (person.getLive() <= 0) {
                     System.out.println("Закончились жизни. Итог: ...");
                 }
@@ -203,7 +216,7 @@ public class Main {
         System.out.println("Количество жизней:\t" + live + "\n"); //OK
     }
     static boolean isValidAnswer(String answer) {
-        String[] ans = {"НЕТ", "ДА", "NO", "YES"};
+        String[] ans = {"НЕТ", "ДА"};
         for (String i : ans) {
             if (i.equals(answer.toUpperCase())) {
                 return true;
