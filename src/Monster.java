@@ -33,27 +33,22 @@ public class Monster {
 
     public boolean taskMonster(int difficultGame) {
         System.out.println("Решите задачу:");
+        Random random = new Random();
+        int a = random.nextInt(100);
+        int b = random.nextInt(100);
+        int trueAnswer = a + b;
 
-        if (difficultGame == 1) {
-            Random random = new Random();
-            int a = random.nextInt(100);
-            int b = random.nextInt(100);
-            int trueAnswer = a + b;
+        System.out.println("Реши пример: " + a + " + " + b + " = ?");
+        Scanner scanner = new Scanner(System.in);
+        int answer = scanner.nextInt();
 
-            System.out.println("Реши пример: " + a + " + " + b + " = ?");
-            Scanner scanner = new Scanner(System.in);
-            int answer = scanner.nextInt();
-
-            if (trueAnswer == answer) {
-                System.out.println("Верно! Ты победил монстра");
-                return true;
-            } else {
-                System.out.println("Ты проиграл эту битву!");
-                return false;
-            }
+        if (trueAnswer == answer) {
+            System.out.println("Верно! Ты победил монстра");
+            return true;
         } else {
-            // какой-то код
+            System.out.println("Ты проиграл эту битву!");
             return false;
         }
+
     }
 }

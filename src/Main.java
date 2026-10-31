@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -45,15 +47,17 @@ public class Main {
         }
 
         board[castleY - 1][castleX - 1] = castle;
-
+        
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
+        while (!isValidAnswer(answer)) {
+            System.out.println("Неверный ввод. (Напиши ДА/НЕТ)");
+            answer = scanner.nextLine();
+        }
 
-        System.out.println("Ваш ответ:\t" + answer);
-
-        switch (answer) {
+        switch (answer.toUpperCase()) {
             case "ДА":
                 System.out.println("Выбери сложность игры (от 1 до 5):");
                 int difficultGame = scanner.nextInt();
@@ -106,7 +110,70 @@ public class Main {
                         break;
                     }
                 }
+//WASD
+                while (true) {
+                    board[person.getY() - 1][person.getX() - 1] = person.getImage();
+                    outputBoard(board, person.getLive());
 
+                    System.out.println("Введите, куда будет ходить персонаж "
+                            + "(ход возможен только по вертикали или горизонтали на одну клетку)"
+                            + "\nКоординаты персонажа — (x: " + person.getX()
+                            + ", y: " + person.getY() + ")");
+
+                    String stepWASD = scanner.nextLine();
+                    while (!isValidMoveWASD(stepWASD)) {
+                        stepWASD = scanner.nextLine()
+                    }
+                    switch (stepWASD) {
+                        case "W":
+                            int x = person.getX() + 1;
+                            int y = person.getY();
+                        case "W":
+                            int x = person.getX() + 1;
+                            int y = person.getY();
+                        case "W":
+                            int x = person.getX() + 1;
+                            int y = person.getY();
+                        case "W":
+                            int x = person.getX() + 1;
+                            int y = person.getY();
+                    }
+                    System.out.println(x + ", " + y);
+
+                    if (person.isMoveCorrect(x, y)) {
+                        if (board[y - 1][x - 1].equals("  ")) {
+                            board[person.getY() - 1][person.getX() - 1] = "  ";
+                            person.move(x, y);
+                            step++;
+
+                            System.out.println("Ход корректный; новые координаты: "
+                                    + person.getX() + ", " + person.getY()
+                                    + "\nХод номер: " + step);
+                        } else if (board[y - 1][x - 1].equals(castle)) {
+                            System.out.println("Вы прошли игру!");
+                            break;
+                        } else {
+                            for (Monster monster : monsters) {
+                                if (monster.conflictPerson(x, y)) {
+                                    if (monster.taskMonster(difficultGame)) {
+                                        board[person.getY() - 1][person.getX() - 1] = "  ";
+                                        person.move(x, y);
+                                        step++;
+                                    } else {
+                                        person.downLive();
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        System.out.println("Некорректный ход");
+                    }
+
+                    if (person.getLive() <= 0) {
+                        break;
+                    }
+                }
                 if (person.getLive() <= 0) {
                     System.out.println("Закончились жизни. Итог: ...");
                 }
@@ -116,9 +183,6 @@ public class Main {
                 System.out.println("Жаль, приходи ещё!");
                 break;
 
-            default:
-                System.out.println("Данные введены некорректно");
-                break;
         }
     }
 
@@ -137,6 +201,24 @@ public class Main {
         System.out.println(wall);
 
         System.out.println("Количество жизней:\t" + live + "\n"); //OK
+    }
+    static boolean isValidAnswer(String answer) {
+        String[] ans = {"НЕТ", "ДА", "NO", "YES"};
+        for (String i : ans) {
+            if (i.equals(answer.toUpperCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    static boolean isValidMoveWASD(String letter) {
+        String[] moves = {"W", "A", "S", "D"};
+        for (String i : moves) {
+            if (i.equals(letter.toUpperCase())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
