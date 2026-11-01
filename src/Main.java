@@ -131,7 +131,7 @@ public class Main {
                         }
                         int x = person.getX();
                         int y = person.getY();
-                        /*switch (stepWASD) {
+                        switch (stepWASD) {
                             case "W":
                                 x = person.getX();
                                 y = person.getY() - 1;
@@ -148,7 +148,7 @@ public class Main {
                                 x = person.getX() - 1;
                                 y = person.getY();
                                 break;
-                        }*/
+                        }
                         System.out.println(x + ", " + y);
 
                         if (person.isMoveCorrect(x, y)) {
