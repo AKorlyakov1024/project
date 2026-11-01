@@ -124,7 +124,7 @@ public class Main {
                                 + "\nКоординаты персонажа — (x: " + person.getX()
                                 + ", y: " + person.getY() + ")");
 
-                        String stepWASD = scanner.nextLine();
+                        String stepWASD = scanner.next();
                         while (!isValidMoveWASD(stepWASD)) {
                             System.out.println("Неверный ввод (Введи W/A/S/D)");
                             stepWASD = scanner.nextLine().toUpperCase();
