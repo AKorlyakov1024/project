@@ -1,7 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.util.Random;
 import java.util.Scanner;
 
