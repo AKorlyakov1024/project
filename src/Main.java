@@ -123,17 +123,17 @@ public class Main {
                         String stepWASD = scanner.next();
                         while (!isValidMoveWASD(stepWASD)) {
                             System.out.println("Неверный ввод (Введи W/A/S/D)");
-                            stepWASD = scanner.nextLine().toUpperCase();
+                            stepWASD = (scanner.next());
                         }
                         int x = person.getX();
                         int y = person.getY();
-                        switch (stepWASD) {
+                        switch (stepWASD.toUpperCase()) {
                             case "W":
                                 x = person.getX();
                                 y = person.getY() - 1;
                                 break;
                             case "A":
-                                x = person.getX() + 1;
+                                x = person.getX() - 1;
                                 y = person.getY();
                                 break;
                             case "S":
@@ -141,7 +141,7 @@ public class Main {
                                 y = person.getY() + 1;
                                 break;
                             case "D":
-                                x = person.getX() - 1;
+                                x = person.getX() + 1;
                                 y = person.getY();
                                 break;
                         }
