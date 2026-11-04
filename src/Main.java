@@ -7,11 +7,6 @@ import java.time.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         String castle = "\uD83C\uDFF0";
-
-
-
-
-        
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
         Scanner scanner = new Scanner(System.in);
@@ -97,7 +92,7 @@ public class Main {
                                 System.out.println("Вы прошли игру!");
                                 ZoneId zoneId = ZoneId.of("Europe/Moscow");
                                 ZonedDateTime now = ZonedDateTime.now(zoneId);
-                                String rec = String.format("Steps: %s, Time: %s.%s.%s %s:%s:%s\n", step + 1, now.getDayOfMonth(), now.getMonth().getValue(), now.getYear(), now.getHour(), now.getMinute(), now.getSecond());
+                                String rec = String.format("Steps: %s, Difficult game: %s, Time: %s.%s.%s %s:%s:%s\n", step + 1, difficultGame, now.getDayOfMonth(), now.getMonth().getValue(), now.getYear(), now.getHour(), now.getMinute(), now.getSecond());
                                 Path history = Path.of("history of victories");
                                 Files.writeString(history, rec, StandardOpenOption.APPEND);
                                 System.out.println("История прохождений: ");
@@ -175,7 +170,7 @@ public class Main {
                                 System.out.println("Вы прошли игру!");
                                 ZoneId zoneId = ZoneId.of("Europe/Moscow");
                                 ZonedDateTime now = ZonedDateTime.now(zoneId);
-                                String rec = String.format("Steps: %s, Time: %s.%s.%s %s:%s:%s\n", step + 1, now.getDayOfMonth(), now.getMonth().getValue(), now.getYear(), now.getHour(), now.getMinute(), now.getSecond());
+                                String rec = String.format("Steps: %s, Difficult game: %s, Time: %s.%s.%s %s:%s:%s\n", step + 1, difficultGame, now.getDayOfMonth(), now.getMonth().getValue(), now.getYear(), now.getHour(), now.getMinute(), now.getSecond());
                                 Path history = Path.of("history of victories");
                                 Files.writeString(history, rec, StandardOpenOption.APPEND);
                                 System.out.println("История прохождений: ");
@@ -206,7 +201,7 @@ public class Main {
                 }
 
                 if (person.getLive() <= 0) {
-                    System.out.println("Закончились жизни. Итог: ...");
+                    System.out.println("Закончились жизни. Вы проиграли.");
                 }
                 break;
 
