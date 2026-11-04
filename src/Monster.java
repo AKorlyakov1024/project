@@ -2,6 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Monster {
+    //private String image = "\uD83E\uDDDF";
     private String image = "\uD83E\uDDDF";
     private final int x, y;
 

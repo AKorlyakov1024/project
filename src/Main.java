@@ -13,15 +13,16 @@ public class Main {
         Random random = new Random();
         int castleX = 1 + random.nextInt(sizeBoard);
         int castleY = 1;
-
+        String cell = " \u200a ";
         String[][] board = new String[sizeBoard][sizeBoard];
         for (int y = 1; y <= sizeBoard; y++) {
             for (int x = 1; x <= sizeBoard; x++) {
-                board[y - 1][x - 1] = "  ";
+                board[y - 1][x - 1] = cell;
             }
         }
 
         int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
+        // countMonster = 10;
         Monster[] monsters = new Monster[countMonster];
         int count = 0;
 
@@ -37,7 +38,7 @@ public class Main {
             int row = monster.getY() - 1;
             int column = monster.getX() - 1;
 
-            if (board[row][column].equals("  ")) {
+            if (board[row][column].equals(cell)) {
                 board[row][column] = monster.getImage();
                 monsters[count] = monster;
                 count++;
@@ -77,8 +78,8 @@ public class Main {
                         System.out.println(x + ", " + y);
 
                         if (person.isMoveCorrect(x, y)) {
-                            if (board[y - 1][x - 1].equals("  ")) {
-                                board[person.getY() - 1][person.getX() - 1] = "  ";
+                            if (board[y - 1][x - 1].equals(cell)) {
+                                board[person.getY() - 1][person.getX() - 1] = cell;
                                 person.move(x, y);
                                 step++;
 
@@ -92,7 +93,7 @@ public class Main {
                                 for (Monster monster : monsters) {
                                     if (monster.conflictPerson(x, y)) {
                                         if (monster.taskMonster(difficultGame)) {
-                                            board[person.getY() - 1][person.getX() - 1] = "  ";
+                                            board[person.getY() - 1][person.getX() - 1] = cell;
                                             person.move(x, y);
                                             step++;
                                         } else {
@@ -148,8 +149,8 @@ public class Main {
                         System.out.println(x + ", " + y);
 
                         if (person.isMoveCorrect(x, y)) {
-                            if (board[y - 1][x - 1].equals("  ")) {
-                                board[person.getY() - 1][person.getX() - 1] = "  ";
+                            if (board[y - 1][x - 1].equals(cell)) {
+                                board[person.getY() - 1][person.getX() - 1] = cell;
                                 person.move(x, y);
                                 step++;
 
@@ -163,7 +164,7 @@ public class Main {
                                 for (Monster monster : monsters) {
                                     if (monster.conflictPerson(x, y)) {
                                         if (monster.taskMonster(difficultGame)) {
-                                            board[person.getY() - 1][person.getX() - 1] = "  ";
+                                            board[person.getY() - 1][person.getX() - 1] = cell;
                                             person.move(x, y);
                                             step++;
                                         } else {
@@ -198,16 +199,16 @@ public class Main {
     static void outputBoard(String[][] board, int live) {
         String leftBlock = "| ";
         String rightBlock = "|";
-        String wall = "+ —— + —— + —— + —— + —— +";
+        String wall = "+ —\u200a— ";
 
         for (String[] row : board) {
-            System.out.println(wall);
+            System.out.println(wall.repeat(board.length) + "+");
             for (String col : row) {
                 System.out.print(leftBlock + col + " ");
             }
             System.out.println(rightBlock);
         }
-        System.out.println(wall);
+        System.out.println(wall.repeat(board.length) + "+");
 
         System.out.println("Количество жизней:\t" + live + "\n"); //OK1
     }
