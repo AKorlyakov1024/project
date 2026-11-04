@@ -5,47 +5,9 @@ public class Main {
     public static void main(String[] args) {
         String castle = "\uD83C\uDFF0";
 
-        int sizeBoard = 5;
-        int step = 0;
 
-        Person person = new Person(sizeBoard);
 
-        Random random = new Random();
-        int castleX = 1 + random.nextInt(sizeBoard);
-        int castleY = 1;
-        String cell = " \u200a ";
-        String[][] board = new String[sizeBoard][sizeBoard];
-        for (int y = 1; y <= sizeBoard; y++) {
-            for (int x = 1; x <= sizeBoard; x++) {
-                board[y - 1][x - 1] = cell;
-            }
-        }
 
-        int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
-        // countMonster = 10;
-        Monster[] monsters = new Monster[countMonster];
-        int count = 0;
-
-        while (count < countMonster) {
-            Monster monster;
-
-            if (random.nextBoolean()) {
-                monster = new Monster(sizeBoard);
-            } else {
-                monster = new BigMonster(sizeBoard);
-            }
-
-            int row = monster.getY() - 1;
-            int column = monster.getX() - 1;
-
-            if (board[row][column].equals(cell)) {
-                board[row][column] = monster.getImage();
-                monsters[count] = monster;
-                count++;
-            }
-        }
-
-        board[castleY - 1][castleX - 1] = castle;
         
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
@@ -58,9 +20,51 @@ public class Main {
 
         switch (answer.toUpperCase()) {
             case "ДА":
-                System.out.println("Выбери сложность игры (от 1 до 5):");
+                System.out.println("Выбери сложность игры (от 1 до 3):");
                 int difficultGame = scanner.nextInt();
                 System.out.println("Выбранная сложность:\t" + difficultGame);
+                int sizeBoard = 5 + (difficultGame - 1);
+                int step = 0;
+
+                Person person = new Person(sizeBoard);
+
+                Random random = new Random();
+                int castleX = 1 + random.nextInt(sizeBoard);
+                int castleY = 1;
+                String cell = " \u200a ";
+                String[][] board = new String[sizeBoard][sizeBoard];
+                for (int y = 1; y <= sizeBoard; y++) {
+                    for (int x = 1; x <= sizeBoard; x++) {
+                        board[y - 1][x - 1] = cell;
+                    }
+                }
+
+                board[castleY - 1][castleX - 1] = castle;
+                int countMonster;
+                if (difficultGame == 1){ countMonster = sizeBoard * 2;}
+                else { countMonster = sizeBoard * sizeBoard - sizeBoard - 1;}
+                // countMonster = 10;
+                Monster[] monsters = new Monster[countMonster];
+                int count = 0;
+
+                while (count < countMonster) {
+                    Monster monster;
+
+                    if (random.nextBoolean()) {
+                        monster = new Monster(sizeBoard);
+                    } else {
+                        monster = new BigMonster(sizeBoard);
+                    }
+
+                    int row = monster.getY() - 1;
+                    int column = monster.getX() - 1;
+
+                    if (board[row][column].equals(cell)) {
+                        board[row][column] = monster.getImage();
+                        monsters[count] = monster;
+                        count++;
+                    }
+                }
                 System.out.println("Выбери режим управления (Координаты - 1/WASD - 2)");
                 int controlMode = scanner.nextInt();
                 if (controlMode == 1) {
@@ -77,7 +81,7 @@ public class Main {
                         int y = scanner.nextInt();
                         System.out.println(x + ", " + y);
 
-                        if (person.isMoveCorrect(x, y)) {
+                        if (person.isMoveCorrect(x, y) && x <= sizeBoard && y <= sizeBoard) {
                             if (board[y - 1][x - 1].equals(cell)) {
                                 board[person.getY() - 1][person.getX() - 1] = cell;
                                 person.move(x, y);
@@ -148,7 +152,7 @@ public class Main {
                         }
                         System.out.println(x + ", " + y);
 
-                        if (person.isMoveCorrect(x, y)) {
+                        if (person.isMoveCorrect(x, y) && x <= sizeBoard && y <= sizeBoard) {
                             if (board[y - 1][x - 1].equals(cell)) {
                                 board[person.getY() - 1][person.getX() - 1] = cell;
                                 person.move(x, y);
