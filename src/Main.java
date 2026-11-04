@@ -1,8 +1,11 @@
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
+import java.nio.file.*;
+import java.time.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String castle = "\uD83C\uDFF0";
 
 
@@ -81,7 +84,7 @@ public class Main {
                         int y = scanner.nextInt();
                         System.out.println(x + ", " + y);
 
-                        if (person.isMoveCorrect(x, y) && x <= sizeBoard && y <= sizeBoard) {
+                        if (person.isMoveCorrect(x, y) && x <= sizeBoard && 0 < x && 0 < y && y <= sizeBoard) {
                             if (board[y - 1][x - 1].equals(cell)) {
                                 board[person.getY() - 1][person.getX() - 1] = cell;
                                 person.move(x, y);
@@ -92,6 +95,13 @@ public class Main {
                                         + "\nХод номер: " + step);
                             } else if (board[y - 1][x - 1].equals(castle)) {
                                 System.out.println("Вы прошли игру!");
+                                ZoneId zoneId = ZoneId.of("Europe/Moscow");
+                                ZonedDateTime now = ZonedDateTime.now(zoneId);
+                                String rec = String.format("Steps: %s, Time: %s.%s.%s %s:%s:%s\n", step + 1, now.getDayOfMonth(), now.getMonth().getValue(), now.getYear(), now.getHour(), now.getMinute(), now.getSecond());
+                                Path history = Path.of("history of victories");
+                                Files.writeString(history, rec, StandardOpenOption.APPEND);
+                                System.out.println("История прохождений: ");
+                                System.out.println(Files.readString(history));
                                 break;
                             } else {
                                 for (Monster monster : monsters) {
@@ -152,7 +162,7 @@ public class Main {
                         }
                         System.out.println(x + ", " + y);
 
-                        if (person.isMoveCorrect(x, y) && x <= sizeBoard && y <= sizeBoard) {
+                        if (person.isMoveCorrect(x, y) && x <= sizeBoard && 0 < x && 0 < y && y <= sizeBoard) {
                             if (board[y - 1][x - 1].equals(cell)) {
                                 board[person.getY() - 1][person.getX() - 1] = cell;
                                 person.move(x, y);
@@ -163,6 +173,13 @@ public class Main {
                                         + "\nХод номер: " + step);
                             } else if (board[y - 1][x - 1].equals(castle)) {
                                 System.out.println("Вы прошли игру!");
+                                ZoneId zoneId = ZoneId.of("Europe/Moscow");
+                                ZonedDateTime now = ZonedDateTime.now(zoneId);
+                                String rec = String.format("Steps: %s, Time: %s.%s.%s %s:%s:%s\n", step + 1, now.getDayOfMonth(), now.getMonth().getValue(), now.getYear(), now.getHour(), now.getMinute(), now.getSecond());
+                                Path history = Path.of("history of victories");
+                                Files.writeString(history, rec, StandardOpenOption.APPEND);
+                                System.out.println("История прохождений: ");
+                                System.out.println(Files.readString(history));
                                 break;
                             } else {
                                 for (Monster monster : monsters) {
